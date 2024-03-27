@@ -1,7 +1,5 @@
 package br.com.juliana.controllers;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +11,6 @@ import br.com.juliana.math.SimpleMath;
 @RestController //IDENTIFICA QUE ESSE CONTROLLER É UMA REST API
 public class MathController {
 
-    private final AtomicLong counter = new AtomicLong();
     private SimpleMath math = new SimpleMath();
 
     //CALCULO SOMA
