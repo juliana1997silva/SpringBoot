@@ -2,18 +2,42 @@ package br.com.juliana.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+//faz o banco entender que este arquivo serve para uma coluna do banco de dados
+@Entity
+
+// mostra para o spring qual tabela esse arquivo se refere
+@Table(name = "person")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name", nullable = false, length = 80)
     private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 80)
     private String lastName;
+
+    @Column(nullable = false, length = 100)
     private String address;
+
+    @Column(nullable = false, length = 6)
     private String gender;
 
+
+
     public Person() {
-        
+
     }
 
     public Long getId() {
@@ -103,5 +127,5 @@ public class Person implements Serializable {
         } else if (!gender.equals(other.gender))
             return false;
         return true;
-    }    
+    }
 }

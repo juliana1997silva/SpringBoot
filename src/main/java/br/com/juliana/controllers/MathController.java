@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.juliana.converters.NumberConverter;
-import br.com.juliana.exceptions.UnsupportedMathOperationException;
+import br.com.juliana.exceptions.ResourceNotFoundException;
 import br.com.juliana.math.SimpleMath;
 
 @RestController //IDENTIFICA QUE ESSE CONTROLLER É UMA REST API
@@ -20,7 +20,7 @@ public class MathController {
         @PathVariable(value = "numberTwo") String numberTwo
     ) {
         if(!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         return math.sum(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo)) ;
@@ -33,7 +33,7 @@ public class MathController {
         @PathVariable(value = "numberTwo") String numberTwo
     ) {
         if(!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         return math.subtraction(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo)) ;
@@ -46,7 +46,7 @@ public class MathController {
         @PathVariable(value = "numberTwo") String numberTwo
     ) {
         if(!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         return math.multiplication(NumberConverter.convertToDouble(numberOne), NumberConverter.convertToDouble(numberTwo)) ;
@@ -59,7 +59,7 @@ public class MathController {
         @PathVariable(value = "numberTwo") String numberTwo
     ) {
         if(!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         return math.division(NumberConverter.convertToDouble(numberOne) , NumberConverter.convertToDouble(numberTwo));
@@ -72,7 +72,7 @@ public class MathController {
         @PathVariable(value = "numberTwo") String numberTwo
     ) {
         if(!NumberConverter.isNumeric(numberOne) || !NumberConverter.isNumeric(numberTwo)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         return math.medium(NumberConverter.convertToDouble(numberOne) , NumberConverter.convertToDouble(numberTwo));
@@ -84,7 +84,7 @@ public class MathController {
         @PathVariable(value = "numberOne") String numberOne
     ) {
         if(!NumberConverter.isNumeric(numberOne)) {
-            throw new UnsupportedMathOperationException("Por favor, insira um valor numerico");
+            throw new ResourceNotFoundException("Por favor, insira um valor numerico");
         
         }
         //math.sqrt => faz o calculo da raiz quadrada do numero que esta recebendo

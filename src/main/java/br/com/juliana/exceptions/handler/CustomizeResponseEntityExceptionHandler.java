@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import br.com.juliana.exceptions.ExceptionResponse;
-import br.com.juliana.exceptions.UnsupportedMathOperationException;
+import br.com.juliana.exceptions.ResourceNotFoundException;
 
 //utiliza sempre que precisa concentrar algum tratamento que seria espalhado em todos os controllers
 @ControllerAdvice 
@@ -34,8 +34,8 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
 
 
     //exceções especifica para o endpoint /sum
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions(
         Exception ex, WebRequest request
         ) {
             ExceptionResponse exceptionResponse = new ExceptionResponse(
@@ -43,7 +43,7 @@ public class CustomizeResponseEntityExceptionHandler extends ResponseEntityExcep
                 ex.getMessage(), 
                 request.getDescription(false)
                 );
-                return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
 

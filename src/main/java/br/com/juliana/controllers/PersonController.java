@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import br.com.juliana.services.PersonServices;
 
 @RestController
 @RequestMapping("/person")
+
 public class PersonController {
 
     // com essa anotação o spring boot vai cuidar da instanciação
@@ -33,27 +36,29 @@ public class PersonController {
 
     // retorna apenas um registro => registro do id informado na URL
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") String id) {
+    public Person findById(@PathVariable(value = "id") @NonNull Long id) {
 
         return services.findById(id);
     }
 
     // registra um dado
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person person) {
+    public Person create(@RequestBody @NonNull Person person) {
         return services.create(person);
     }
 
     // atualiza um dado
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person person) {
+    public Person update(@RequestBody @NonNull Person person) {
         return services.create(person);
     }
 
     // deleta um dado
     @DeleteMapping(value = "{id}")
-    public void delete(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> delete(@PathVariable(value = "id") @NonNull Long id) {
        services.delete(id);
+       //retorna o status 204
+       return ResponseEntity.noContent().build();
     }
 
 }
