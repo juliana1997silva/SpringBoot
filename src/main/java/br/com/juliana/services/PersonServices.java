@@ -3,7 +3,6 @@ package br.com.juliana.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -65,7 +64,7 @@ public class PersonServices {
         }
     }
 
-    public ResponseEntity<?> delete(@NonNull Long id) {
+    public void delete(@NonNull Long id) {
         // Ensure null safety by checking if findById returns null
         Person entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado"));
@@ -76,7 +75,5 @@ public class PersonServices {
         } else {
             throw new ResourceNotFoundException("Nenhum registro encontrado");
         }
-    
-        return ResponseEntity.noContent().build();
     }
 }
