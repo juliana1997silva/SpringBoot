@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.juliana.data.vo.v1.PersonVO;
 import br.com.juliana.data.vo.v2.PersonVOV2;
-import br.com.juliana.model.Person;
 import br.com.juliana.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 
 public class PersonController {
 
