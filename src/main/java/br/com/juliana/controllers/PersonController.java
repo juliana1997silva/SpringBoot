@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.juliana.data.vo.v1.PersonVO;
 import br.com.juliana.model.Person;
 import br.com.juliana.services.PersonServices;
 
@@ -29,27 +30,27 @@ public class PersonController {
 
     // retorna todos os registros
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
 
         return services.findAll();
     }
 
     // retorna apenas um registro => registro do id informado na URL
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") @NonNull Long id) {
+    public PersonVO findById(@PathVariable(value = "id") @NonNull Long id) {
 
         return services.findById(id);
     }
 
     // registra um dado
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody @NonNull Person person) {
+    public PersonVO create(@RequestBody @NonNull PersonVO person) {
         return services.create(person);
     }
 
     // atualiza um dado
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody @NonNull Person person) {
+    public PersonVO update(@RequestBody @NonNull PersonVO person) {
         return services.create(person);
     }
 
@@ -58,6 +59,7 @@ public class PersonController {
     public ResponseEntity<?> delete(@PathVariable(value = "id") @NonNull Long id) {
        services.delete(id);
        //retorna o status 204
+       
        return ResponseEntity.noContent().build();
     }
 

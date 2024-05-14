@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import br.com.juliana.data.vo.v1.PersonVO;
 import br.com.juliana.exceptions.ResourceNotFoundException;
+import br.com.juliana.mapper.DozerMapper;
 import br.com.juliana.model.Person;
 import br.com.juliana.repositories.PersonRepository;
 
@@ -19,25 +21,30 @@ public class PersonServices {
     PersonRepository repository;
 
     // lista todos os registros
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
 
-        return repository.findAll();
+        return DozerMapper.parseListObject(repository.findAll(), PersonVO.class);
     }
 
     // lista o registro com o ID informado
-    public Person findById(@NonNull Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado"));
+    public PersonVO findById(@NonNull Long id) {
+        var entity = repository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado"));
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
     // cria um registro
-    public Person create(@NonNull Person person) {
-        return repository.save(person);
+    public PersonVO create(@NonNull PersonVO person) {
+
+        // recebemos um VO, convertamos esse vo para entidade do tipo person, salva os dados no banco e
+        // pega o resultado e passa para um objeto vo
+        var entity = DozerMapper.parseObject(person, Person.class);
+        return DozerMapper.parseObject(repository.save(entity),PersonVO.class);
 
     }
 
     // atualiza o registro
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         Long id = person.getId();
 
         // Verifica se o ID é nulo
@@ -56,7 +63,7 @@ public class PersonServices {
             entity.setAddress(person.getAddress());
             entity.setGender(person.getGender());
 
-            return repository.save(entity);
+        return DozerMapper.parseObject(repository.save(entity),PersonVO.class);
 
         } else {
 
@@ -66,7 +73,7 @@ public class PersonServices {
 
     public void delete(@NonNull Long id) {
         // Ensure null safety by checking if findById returns null
-        Person entity = repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Nenhum registro encontrado"));
     
         // Add a null check to handle the case where findById returns null
