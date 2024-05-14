@@ -7,8 +7,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import br.com.juliana.data.vo.v1.PersonVO;
+import br.com.juliana.data.vo.v2.PersonVOV2;
 import br.com.juliana.exceptions.ResourceNotFoundException;
 import br.com.juliana.mapper.DozerMapper;
+import br.com.juliana.mapper.custom.PersonMapper;
 import br.com.juliana.model.Person;
 import br.com.juliana.repositories.PersonRepository;
 
@@ -19,6 +21,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper mapper;
 
     // lista todos os registros
     public List<PersonVO> findAll() {
@@ -33,13 +38,19 @@ public class PersonServices {
         return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
-    // cria um registro
+    // cria um registro versão VO 1
     public PersonVO create(@NonNull PersonVO person) {
-
         // recebemos um VO, convertamos esse vo para entidade do tipo person, salva os dados no banco e
         // pega o resultado e passa para um objeto vo
         var entity = DozerMapper.parseObject(person, Person.class);
         return DozerMapper.parseObject(repository.save(entity),PersonVO.class);
+
+    }
+
+     // cria um registro versão VO 2 utilizando um mapper customizado
+     public PersonVOV2 createV2(@NonNull PersonVOV2 person) {
+        var entity = mapper.convertEntityVoToEntity(person);
+        return mapper.convertEntityToVo(repository.save(entity));
 
     }
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.juliana.data.vo.v1.PersonVO;
+import br.com.juliana.data.vo.v2.PersonVOV2;
 import br.com.juliana.model.Person;
 import br.com.juliana.services.PersonServices;
 
@@ -42,14 +43,20 @@ public class PersonController {
         return services.findById(id);
     }
 
-    // registra um dado
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    // registra um dado versão do VO 1
+    @PostMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO create(@RequestBody @NonNull PersonVO person) {
         return services.create(person);
     }
 
+    // registra um dado versão do VO 2
+    @PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PersonVOV2 create(@RequestBody @NonNull PersonVOV2 person) {
+        return services.createV2(person);
+    }
+
     // atualiza um dado
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonVO update(@RequestBody @NonNull PersonVO person) {
         return services.create(person);
     }
